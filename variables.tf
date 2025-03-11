@@ -16,11 +16,13 @@ variable "template_vm_id" {
 variable "user_ssh_key" {
   type        = string
   description = "Public SSH key for VM access"
+  default     = ""
 }
 
 variable "admin_user" {
   type        = string
   description = "Admin username for VMs"
+  default     = ""
 }
 
 variable "searchdomain" {
