@@ -11,6 +11,7 @@ variable "target_node" {
 variable "template_vm_id" {
   description = "Name of the template to clone from"
   type        = string
+  default     = ""
 }
 
 variable "user_ssh_key" {
@@ -54,5 +55,6 @@ variable "vms" {
     })))
     ipconfig0 = optional(string)
     tags      = optional(string)
+    cdrom_iso = optional(string)
   }))
 }

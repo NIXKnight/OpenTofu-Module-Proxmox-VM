@@ -1,6 +1,5 @@
 locals {
   default_vm = {
-    # Required fields like name and vmid are not given defaults here because users should provide them.
     description  = ""
     memory       = 2048
     cores        = 1
@@ -15,6 +14,7 @@ locals {
         model  = "virtio"
       }
     ]
+    cdrom_iso   = ""
     ipconfig0 = "ip=dhcp"
     tags      = ""
   }
@@ -25,7 +25,10 @@ locals {
     for key, vm in var.vms : key => merge(
       local.default_vm,
       vm,
-      { networks = coalesce(vm.networks, local.default_vm.networks) }
+      {
+        networks  = coalesce(vm.networks, local.default_vm.networks)
+        cdrom_iso = coalesce(vm.cdrom_iso, local.default_vm.cdrom_iso)
+      }
     )
   }
 }

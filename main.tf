@@ -5,8 +5,10 @@ resource "proxmox_vm_qemu" "vms" {
   name        = each.value.name
   vmid        = each.value.vmid
   target_node = var.target_node
-  clone_id    = var.template_vm_id
-  full_clone  = true
+
+  # Conditionally use the template if provided
+  clone_id    = var.template_vm_id != "" ? var.template_vm_id : null
+  full_clone  = var.template_vm_id != "" ? true : false
   desc        = each.value.description
 
   # System configuration
@@ -18,7 +20,7 @@ resource "proxmox_vm_qemu" "vms" {
   # OS and boot configuration
   os_type = "cloud-init"
   qemu_os = "l26"
-  boot    = "order=virtio0"
+  boot = each.value.cdrom_iso != "" ? "order=virtio0;ide3" : "order=virtio0"
 
   # QEMU agent configuration
   agent = 1
@@ -60,6 +62,14 @@ resource "proxmox_vm_qemu" "vms" {
       ide2 {
         cloudinit {
           storage = each.value.ci_storage
+        }
+      }
+      dynamic "ide3" {
+        for_each = each.value.cdrom_iso != "" ? [each.value.cdrom_iso] : []
+        content {
+          cdrom {
+            iso = ide3.value
+          }
         }
       }
     }
