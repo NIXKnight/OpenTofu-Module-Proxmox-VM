@@ -27,7 +27,6 @@ locals {
       vm,
       {
         networks  = coalesce(vm.networks, local.default_vm.networks)
-        cdrom_iso = coalesce(vm.cdrom_iso, local.default_vm.cdrom_iso)
       }
     )
   }
