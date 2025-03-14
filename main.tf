@@ -7,9 +7,9 @@ resource "proxmox_vm_qemu" "vms" {
   target_node = var.target_node
 
   # Conditionally use the template if provided
-  clone_id    = var.template_vm_id != "" ? var.template_vm_id : null
-  full_clone  = var.template_vm_id != "" ? true : false
-  desc        = each.value.description
+  clone_id   = var.template_vm_id != "" ? var.template_vm_id : null
+  full_clone = var.template_vm_id != "" ? true : false
+  desc       = each.value.description
 
   # System configuration
   sockets = each.value.sockets
@@ -20,7 +20,7 @@ resource "proxmox_vm_qemu" "vms" {
   # OS and boot configuration
   os_type = "cloud-init"
   qemu_os = "l26"
-  boot = each.value.cdrom_iso != "" ? "order=virtio0;ide3" : "order=virtio0"
+  boot    = each.value.cdrom_iso != "" ? "order=virtio0;ide3" : "order=virtio0"
 
   # QEMU agent configuration
   agent = 1
