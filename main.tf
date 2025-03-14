@@ -57,6 +57,49 @@ resource "proxmox_vm_qemu" "vms" {
           size    = each.value.disk_size
         }
       }
+
+      # Conditional virtio1 disk
+      dynamic "virtio1" {
+        for_each = [for disk in each.value.additional_disks : disk if disk.id == "virtio1"]
+        content {
+          disk {
+            storage = virtio1.value.storage
+            size    = virtio1.value.size
+          }
+        }
+      }
+
+      # Conditional virtio2 disk
+      dynamic "virtio2" {
+        for_each = [for disk in each.value.additional_disks : disk if disk.id == "virtio2"]
+        content {
+          disk {
+            storage = virtio2.value.storage
+            size    = virtio2.value.size
+          }
+        }
+      }
+
+      # Conditional virtio3 disk
+      dynamic "virtio3" {
+        for_each = [for disk in each.value.additional_disks : disk if disk.id == "virtio3"]
+        content {
+          disk {
+            storage = virtio3.value.storage
+            size    = virtio3.value.size
+          }
+        }
+      }
+
+      dynamic "virtio4" {
+        for_each = [for disk in each.value.additional_disks : disk if disk.id == "virtio4"]
+        content {
+          disk {
+            storage = virtio4.value.storage
+            size    = virtio4.value.size
+          }
+        }
+      }
     }
     ide {
       ide2 {

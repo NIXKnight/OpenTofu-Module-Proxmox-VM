@@ -47,7 +47,12 @@ variable "vms" {
     sockets      = optional(number)
     disk_size    = optional(number)
     disk_storage = optional(string)
-    ci_storage   = optional(string)
+    additional_disks = optional(list(object({
+      id      = string
+      storage = string
+      size    = number
+    })), [])
+    ci_storage = optional(string)
     networks = optional(list(object({
       id     = optional(number)
       bridge = optional(string)
