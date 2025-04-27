@@ -1,12 +1,15 @@
 locals {
   default_vm = {
-    description  = ""
-    memory       = 2048
-    cores        = 1
-    sockets      = 2
-    disk_size    = 20
-    disk_storage = "storage"
-    ci_storage   = "local"
+    description    = ""
+    memory         = 2048
+    cores          = 1
+    sockets        = 2
+    disk_size      = 20
+    disk_storage   = "storage"
+    ci_storage     = "local"
+    template_vm_id = ""
+    admin_user     = ""
+    user_ssh_key   = ""
     networks = [
       {
         id     = 0
@@ -14,7 +17,7 @@ locals {
         model  = "virtio"
       }
     ]
-    cdrom_iso   = ""
+    cdrom_iso = ""
     ipconfig0 = "ip=dhcp"
     tags      = ""
   }
@@ -26,7 +29,7 @@ locals {
       local.default_vm,
       vm,
       {
-        networks  = coalesce(vm.networks, local.default_vm.networks)
+        networks = coalesce(vm.networks, local.default_vm.networks)
       }
     )
   }

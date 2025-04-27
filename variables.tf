@@ -8,24 +8,6 @@ variable "target_node" {
   type        = string
 }
 
-variable "template_vm_id" {
-  description = "Name of the template to clone from"
-  type        = string
-  default     = ""
-}
-
-variable "user_ssh_key" {
-  type        = string
-  description = "Public SSH key for VM access"
-  default     = ""
-}
-
-variable "admin_user" {
-  type        = string
-  description = "Admin username for VMs"
-  default     = ""
-}
-
 variable "searchdomain" {
   description = "Search domain for VMs"
   type        = string
@@ -39,14 +21,17 @@ variable "nameserver" {
 variable "vms" {
   description = "Map of VM configurations"
   type = map(object({
-    name         = string
-    vmid         = string
-    description  = optional(string)
-    memory       = optional(number)
-    cores        = optional(number)
-    sockets      = optional(number)
-    disk_size    = optional(number)
-    disk_storage = optional(string)
+    name           = string
+    vmid           = string
+    template_vm_id = optional(string)
+    admin_user     = optional(string)
+    user_ssh_key   = optional(string)
+    description    = optional(string)
+    memory         = optional(number)
+    cores          = optional(number)
+    sockets        = optional(number)
+    disk_size      = optional(number)
+    disk_storage   = optional(string)
     additional_disks = optional(list(object({
       id      = string
       storage = string

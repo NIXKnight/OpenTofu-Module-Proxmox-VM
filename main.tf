@@ -7,8 +7,8 @@ resource "proxmox_vm_qemu" "vms" {
   target_node = var.target_node
 
   # Conditionally use the template if provided
-  clone_id   = var.template_vm_id != "" ? var.template_vm_id : null
-  full_clone = var.template_vm_id != "" ? true : false
+  clone_id   = each.value.template_vm_id != null && each.value.template_vm_id != "" ? each.value.template_vm_id : null
+  full_clone = each.value.template_vm_id != null && each.value.template_vm_id != ""
   desc       = each.value.description
 
   # System configuration
@@ -26,8 +26,8 @@ resource "proxmox_vm_qemu" "vms" {
   agent = 1
 
   # Cloud-init configuration
-  ciuser       = var.admin_user
-  sshkeys      = var.user_ssh_key
+  ciuser       = each.value.admin_user
+  sshkeys      = each.value.user_ssh_key
   searchdomain = var.searchdomain
   nameserver   = var.nameserver
   ipconfig0    = each.value.ipconfig0
