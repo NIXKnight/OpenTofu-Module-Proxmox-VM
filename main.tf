@@ -118,6 +118,15 @@ resource "proxmox_vm_qemu" "vms" {
     }
   }
 
+  # Conditionally attach a virtual TPM 2.0 device
+  dynamic "tpm_state" {
+    for_each = each.value.tpm_storage != null && each.value.tpm_storage != "" ? [1] : []
+    content {
+      storage = each.value.tpm_storage
+      version = "v2.0"
+    }
+  }
+
   # Tags
   tags = each.value.tags
 }

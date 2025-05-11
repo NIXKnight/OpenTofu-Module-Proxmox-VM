@@ -43,8 +43,9 @@ variable "vms" {
       bridge = optional(string)
       model  = optional(string)
     })))
-    ipconfig0 = optional(string)
-    tags      = optional(string)
-    cdrom_iso = optional(string)
+    ipconfig0   = optional(string)
+    tags        = optional(string)
+    cdrom_iso   = optional(string)
+    tpm_storage = optional(string)
   }))
 }
